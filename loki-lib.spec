@@ -93,3 +93,13 @@ iconv -f ISO88591 -t utf8 CHANGES -o CHANGES
 %defattr(-,root,root,-)
 %doc README CHANGES doc/html doc/flex doc/yasli
 
+
+
+%changelog
+* Wed Aug 31 2011 Andrey Bondrov <abondrov@mandriva.org> 0.1.7-1mdv2011.0
++ Revision: 697629
+- imported package loki-lib
+
+
+* Wed Aug 31 2011 Andrey Bondrov <bondrov@math.dvgu.ru> 0.1.7-1mdv2010.2
+- Initial Mandriva release
