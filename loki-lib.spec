@@ -74,7 +74,7 @@ iconv -f ISO88591 -t utf8 CHANGES -o CHANGES
 %build
 %ifarch x86_64
 sed -i s,"/lib","/lib64",g src/Makefile
-sed -i s,"/lib","/lib64",g test/Makefile.common
+sed -i s,"/lib/","/lib64/",g test/Makefile.common
 mkdir lib64
 %endif
 
