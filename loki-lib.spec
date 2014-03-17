@@ -1,105 +1,84 @@
-%define oname		loki
-%define major		0
-%define libname		%mklibname %{oname} %{major}
-%define develname	%mklibname -d %{oname}
+%define oname loki
+%define major %{version}
+%define libname %mklibname %{oname} %{major}
+%define devname %mklibname %{oname} -d
 
-%define rel		%mkrel 1
-%define ver		0.1.7
-
-Name: 			%{oname}-lib
-Version: 		%{ver}
-Release: 		%{rel}
-Summary:		Loki C++ Library of design patterns and idioms
-Group:			System/Libraries
-License:		MIT
+Summary:	Loki C++ Library of design patterns and idioms
+Name:		%{oname}-lib
+Version:	0.1.7
+Release:	2
 # License text not included
 # https://sourceforge.net/tracker/?func=detail&aid=3027570&group_id=29557&atid=396647
-URL:			http://sourceforge.net/projects/loki-lib
-Source0:		http://prdownloads.sourceforge.net/loki-lib/%{oname}-%{version}.tar.gz
-BuildRoot:		%{_tmppath}/build-%{name}-%{version}
+License:	MIT
+Group:		System/Libraries
+Url:		http://sourceforge.net/projects/loki-lib
+Source0:	http://prdownloads.sourceforge.net/loki-lib/%{oname}-%{version}.tar.gz
 
 %description
 A C++ library of designs, containing flexible implementations of common design
 patterns and idioms.
 
-%package -n %{libname}
-Summary: Loki C++ Library of design patterns and idioms
-Group: System/Libraries
-Provides: %{name} = %{version}-%{release}
-Provides: %{oname} = %{version}-%{release}
+#----------------------------------------------------------------------------
 
-%description -n  %{libname}
+%package -n %{libname}
+Summary:	Loki C++ Library of design patterns and idioms
+Group:		System/Libraries
+Obsoletes:	%{_lib}loki0 < 0.1.7-2
+Conflicts:	%{_lib}loki0 < 0.1.7-2
+
+%description -n %{libname}
 A C++ library of designs, containing flexible implementations of common design
 patterns and idioms.
 
-%package -n %{develname}
-Summary: The Loki C++ headers and development libraries
-Group: Development/C++
-Requires: %{libname} = %{version}
-Provides: %{name}-devel = %{version}-%{release}
-Provides: %{oname}-devel = %{version}-%{release}
+%files -n %{libname}
+%{_libdir}/lib%{oname}.so.%{major}*
 
-%description -n  %{develname}
-Headers and shared object symlinks for the Loki C++ Library
+#----------------------------------------------------------------------------
+
+%package -n %{devname}
+Summary:	The Loki C++ headers and development libraries
+Group:		Development/C++
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
+Provides:	%{oname}-devel = %{EVRD}
+
+%description -n  %{devname}
+Headers and shared object symlinks for the Loki C++ Library.
+
+%files -n %{devname}
+%{_includedir}/*
+%{_libdir}/lib%{oname}.so
+%{_libdir}/lib%{oname}.a
+
+#----------------------------------------------------------------------------
 
 %package doc
-Summary: The Loki C++ html docs
-Group: Development/C++
-BuildArch: noarch
+Summary:	The Loki C++ html docs
+Group:		Development/C++
+BuildArch:	noarch
 
 %description doc
-HTML documentation files for the Loki C++ Library
+HTML documentation files for the Loki C++ Library.
+
+%files doc
+%doc README CHANGES doc/html doc/flex doc/yasli
+
+#----------------------------------------------------------------------------
 
 %prep
 %setup -n %{oname}-%{version} -q
-%__chmod -x doc/html/*
-%__rm doc/html/installdox
+chmod -x doc/html/*
+rm doc/html/installdox
 iconv -f ISO88591 -t utf8 CHANGES -o CHANGES
 
 %build
 %ifarch x86_64
-%__sed -i s,"/lib","/lib64",g src/Makefile
-%__mkdir lib64
+sed -i s,"/lib","/lib64",g src/Makefile
+mkdir lib64
 %endif
 
-%make CXXFLAGS="%{optflags}" build-static build-shared
+%make CXXFLAGS="%{optflags}"
 
 %install
-%__rm -rf %{buildroot}
 %makeinstall
 
-%clean
-%__rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -p /sbin/ldconfig
-%endif
-
-%files -n %{libname}
-%defattr(-,root,root)
-%{_libdir}/*.so.*
-
-%files -n %{develname}
-%defattr(-,root,root)
-%{_includedir}/*
-%{_libdir}/*.so
-%{_libdir}/*.a
-
-%files doc
-%defattr(-,root,root,-)
-%doc README CHANGES doc/html doc/flex doc/yasli
-
-
-
-%changelog
-* Wed Aug 31 2011 Andrey Bondrov <abondrov@mandriva.org> 0.1.7-1mdv2011.0
-+ Revision: 697629
-- imported package loki-lib
-
-
-* Wed Aug 31 2011 Andrey Bondrov <bondrov@math.dvgu.ru> 0.1.7-1mdv2010.2
-- Initial Mandriva release
