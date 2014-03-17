@@ -77,7 +77,7 @@ sed -i s,"/lib","/lib64",g src/Makefile
 mkdir lib64
 %endif
 
-%make CXXFLAGS="%{optflags}"
+make CXXFLAGS="%{optflags}"
 
 %install
 %makeinstall
