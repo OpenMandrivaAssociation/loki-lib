@@ -6,7 +6,7 @@
 Summary:	Loki C++ Library of design patterns and idioms
 Name:		%{oname}-lib
 Version:	0.1.7
-Release:	2
+Release:	3
 # License text not included
 # https://sourceforge.net/tracker/?func=detail&aid=3027570&group_id=29557&atid=396647
 License:	MIT
