@@ -11,7 +11,7 @@ Release:	3
 # https://sourceforge.net/tracker/?func=detail&aid=3027570&group_id=29557&atid=396647
 License:	MIT
 Group:		System/Libraries
-Url:		http://sourceforge.net/projects/loki-lib
+Url:		https://sourceforge.net/projects/loki-lib
 Source0:	http://prdownloads.sourceforge.net/loki-lib/%{oname}-%{version}.tar.gz
 
 %description
