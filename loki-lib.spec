@@ -14,6 +14,7 @@ Group:		System/Libraries
 Url:		https://sourceforge.net/projects/loki-lib
 Source0:	http://prdownloads.sourceforge.net/loki-lib/%{oname}-%{version}.tar.gz
 
+BuildRequires:	make
 %description
 A C++ library of designs, containing flexible implementations of common design
 patterns and idioms.
